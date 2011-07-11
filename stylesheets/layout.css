@@ -1,0 +1,46 @@
+html {height:100%}
+body {width:100%; height:100%;}
+div#map {position:absolute; top:0; bottom:0; right:0; width:325px; height:100%; z-index:0;}
+div.data {position:absolute; top:0; bottom:0; left:0; right:325px; height:100%; background:url('../images/data_bkg.jpg') no-repeat center top #090909; z-index:10;}
+div.data span.shadow {position:absolute; top:0; right:-34px; bottom:0; height:100%; width:34px; background:url('../images/data_shadow.png') repeat-y 0 0}
+
+/*HEADER*/
+div.header {display:block; width:100%; margin:42px 0 0 0; color:white}
+div.header div.info {float:left; padding:0 0 0 27px}
+div.header h1 {display:block; font:bold 23px Arial; color:#F1593E;}
+div.header p {display:block; font:normal 12px Arial; color:#666666;}
+div.header p a {color:#CCCCCC; border-bottom:1px solid #CCCCCC; text-decoration:none}
+div.header p a:hover {color:#EEEEEE; border-color:#EEEEEE}
+div.header a.oldweather {float:right; width:147px; height:36px; margin:0 27px 0 0; text-indent:-9999px; background:url('/images/logo.png') no-repeat 0 0; line-height: 0px; font-size:0;}
+
+/*STATS*/
+div.stats {float:left; display:block; width:100%; margin:48px 0 0;}
+div.stats div.controls {height:26px; padding:0 27px}
+div.stats div.controls span.toggle {width:71px; height:25px;}
+div.stats div.controls span.toggle a {float:left; width:24px; height:25px; text-indent:-9999px; line-height:0; font-size:0;}
+div.stats div.controls span.toggle a#bulb {background:url('/images/icons.png') no-repeat 0 0}
+div.stats div.controls span.toggle a#air {width:23px; background:url('/images/icons.png') no-repeat -24px 0}
+div.stats div.controls span.toggle a#sea {background:url('/images/icons.png') no-repeat -48px 0}
+div.stats div.controls span.toggle a:hover {background-position-y:-25px}
+div.stats div.controls span.toggle a.selected {background-position-y:-25px}
+div.stats div.controls span.toggle a.selected:hover {background-position-y:0px}
+
+div.stats div#graph {width:100%; height:237px; margin:5px 0 0 0;}
+
+/*LIST*/
+div.list {position:absolute; top:399px; left:0; right:0; bottom:0; background:white; overflow:scroll}
+table {width:100%}
+table thead {position:relative; width:100%; height:36px; border-bottom:1px solid #e0e0e0;}
+table thead tr {position:relative; float:left; width:100%; height:36px; background:white;}
+table thead tr th {height:36px; background:url('/images/th_bkg.png') no-repeat right center;}
+table thead tr th div {position:relative; height:15px; margin:12px 0 0 10px; font:bold 11px Arial; color:#333333; text-align:left;}
+table thead tr th div.light {color:#666666}
+
+table tbody {width:100%}
+table tbody tr {position:relative; float:left; width:100%; height:38px; border-bottom:1px solid #e2e2e2;}
+table tbody tr td {height:38px; background:url('/images/td_bkg.png') no-repeat right center;s}
+table tbody tr td div {position:relative; height:15px; padding:12px 0 13px 10px; font:normal 13px Arial; color:#666666; text-align:left;}
+
+/*MARKER*/
+div.marker {position:absolute; width:10px; height:10px; background:url('/images/marker.png') no-repeat 0 0}
+div.marker p {position:absolute; top:-11px; left:-6px; font:bold 11px Arial; color:#F25A3D;}

@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>OldWeather - Advanced Interface</title>
+    <link rel="stylesheet" href="stylesheets/reset.css">
+    <link rel="stylesheet" href="stylesheets/layout.css">
+    <link rel="stylesheet" href="stylesheets/leaflet.css">
+    <link rel="stylesheet" href="stylesheets/jscrollpane.css">
+    <!--[if IE]>
+        <link rel="stylesheet" href="stylesheets/leaflet.ie.css">
+    <![endif]-->
+    <script src="javascripts/yepnope.js" type="text/javascript"></script>
+    <script type="text/javascript">
+      yepnope([{
+        load: ['https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js','/javascripts/jquery.mousewheel.js','/javascripts/jquery.jscrollpane.min.js','/javascripts/underscore.js', '/javascripts/leaflet.js', '/javascripts/raphael.js','/javascripts/functions.js', '/javascripts/map.js', '/javascripts/OldWeatherMarker.js', '/javascripts/list.js', '/javascripts/graph.js', '/javascripts/app.js'],
+        callback: function (url, result, key) {
+          if (!window.jQuery) {
+            yepnope('/javascripts/jquery.js');
+          }
+        },
+        complete: function() {
+          initApp();
+        }
+      }]);
+    </script>
+  </head>
+  <body>
+    <div id="map"></div>
+    <div class="data">
+      <span class="shadow"></span>
+      <div class="header">
+        <div class="info">
+          <h1>HMS Amphitrite</h1>
+          <p>Battleship, <a href="#logbood">view logbook page</a></p>
+        </div>
+        <a class="oldweather" href="http://oldweather.org">OldWeather.org</a>
+      </div>
+      <div class="stats">
+        <div class="controls">
+          <span class="toggle">
+            <a id="bulb" class="selected" href="#bulb">BULB</a>
+            <a id="air" class="selected" href="#air">AIR</a>
+            <a id="sea" class="selected" href="#sea">SEA</a>
+          </span>
+        </div>
+        <div id="graph"></div>
+      </div>
+      <div class="list">
+        <table>
+          <thead>
+            <tr>
+              <th><div style="width:65px">RANK</div></th>
+              <th><div style="width:135px">DATE</div></th>
+              <th><div style="width:130px">LAT / LON</div></th>
+              <th><div style="width:80px" class="light">BULB</div></th>
+              <th><div style="width:80px" class="light">SEA</div></th>
+              <th><div style="width:80px" class="light">AIR</div></th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>
