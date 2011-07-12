@@ -4,7 +4,6 @@ L.OldWeatherMarker = L.Class.extend({
     
     options: {
 			// Set id for each marker / row
-			
   	},
 
 
@@ -21,16 +20,16 @@ L.OldWeatherMarker = L.Class.extend({
 
   	onAdd: function(map) {
   	  var me = this;
-  		this._map = map;
+
   		var div = this._div = document.createElement('div');
 			div.setAttribute('class','marker');
 			
 			var value = document.createElement('p');
-			value.innerHTML = this.options.id_;
+			value.innerHTML = this.options.iden;
 
 			div.appendChild(value);
-
   		map._panes.markerPane.appendChild(this._div);
+
       L.DomEvent.addListener(this._div, 'mouseover', this._onMouseOver, this);
       L.DomEvent.addListener(this._div, 'mouseout', this._onMouseOut, this);
 
@@ -40,7 +39,7 @@ L.OldWeatherMarker = L.Class.extend({
   	
 
   	onRemove: function(map) {
-  	  map._panes.markerPane.removeChild(this._canvas);
+  	  map._panes.markerPane.removeChild(this._div);
   		map.off('viewreset', this._reset, this);
   	},
 
@@ -67,15 +66,34 @@ L.OldWeatherMarker = L.Class.extend({
 
   	_onMouseOver: function(e) {
   		L.DomEvent.stopPropagation(e);
-  		L.DomEvent.preventDefault(e);
-  		// this.fire(e.type);
+      this.fire(e.type);
+      this._simulateOver();
+      var event = jQuery.Event('mouseover_');
+      event.iden = this.options.iden;
+      event.from = 'map';
+      $(document).trigger(event);
   	},
 
 
   	_onMouseOut: function(e) {
   		L.DomEvent.stopPropagation(e);
-  		L.DomEvent.preventDefault(e);
-  		// this.fire(e.type);
-  	}
+  		this.fire(e.type);
+      this._simulateOut();
+      var event = jQuery.Event('mouseout_');
+      event.iden = this.options.iden;
+      event.from = 'map';
+      $(document).trigger(event);
+  	},
+
+
+    _simulateOver: function(){
+      var div = this._div;
+      $(div).addClass('hover');
+    },
+
+    _simulateOut: function(){
+      var div = this._div;
+      $(div).removeClass('hover');
+    }
 
   });

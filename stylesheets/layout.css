@@ -1,6 +1,6 @@
 html {height:100%}
 body {width:100%; height:100%;}
-div#map {position:absolute; top:0; bottom:0; right:0; width:325px; height:100%; z-index:0;}
+div#map {position:absolute; top:0; bottom:0; right:0; width:325px; height:100%; z-index:1;}
 div.data {position:absolute; top:0; bottom:0; left:0; right:325px; height:100%; background:url('../images/data_bkg.jpg') no-repeat center top #090909; z-index:10;}
 div.data span.shadow {position:absolute; top:0; right:-34px; bottom:0; height:100%; width:34px; background:url('../images/data_shadow.png') repeat-y 0 0}
 
@@ -24,23 +24,28 @@ div.stats div.controls span.toggle a#sea {background:url('/images/icons.png') no
 div.stats div.controls span.toggle a:hover {background-position-y:-25px}
 div.stats div.controls span.toggle a.selected {background-position-y:-25px}
 div.stats div.controls span.toggle a.selected:hover {background-position-y:0px}
-
-div.stats div#graph {width:100%; height:237px; margin:5px 0 0 0;}
+div.stats div#graph {width:100%; height:237px; margin:5px 0 0 0; overflow:hidden;}
+div.stats div#graph svg {}
 
 /*LIST*/
-div.list {position:absolute; top:399px; left:0; right:0; bottom:0; background:white; overflow:scroll}
+div.list {position:absolute; top:399px; left:0; right:0; bottom:0; background:#f4f4f4; overflow:scroll}
 table {width:100%}
-table thead {position:relative; width:100%; height:36px; border-bottom:1px solid #e0e0e0;}
-table thead tr {position:relative; float:left; width:100%; height:36px; background:white;}
+table thead {position:relative; width:100%; height:36px; background:white;}
+table thead tr {position:relative; float:left; width:100%; height:36px; background:white; border-bottom:1px solid #e0e0e0;}
 table thead tr th {height:36px; background:url('/images/th_bkg.png') no-repeat right center;}
 table thead tr th div {position:relative; height:15px; margin:12px 0 0 10px; font:bold 11px Arial; color:#333333; text-align:left;}
 table thead tr th div.light {color:#666666}
-
 table tbody {width:100%}
 table tbody tr {position:relative; float:left; width:100%; height:38px; border-bottom:1px solid #e2e2e2;}
+table tbody tr.light {background:url('/images/li_bkg_1.png') repeat-x 0 0;}
+table tbody tr.dark {background:url('/images/li_bkg_2.png') repeat-x 0 0;}
+table tbody tr.hover {background:url('/images/li_bkg_hover.png') repeat-x 0 0;}
+table tbody tr:hover {background:url('/images/li_bkg_hover.png') repeat-x 0 0; cursor:pointer;}
 table tbody tr td {height:38px; background:url('/images/td_bkg.png') no-repeat right center;s}
 table tbody tr td div {position:relative; height:15px; padding:12px 0 13px 10px; font:normal 13px Arial; color:#666666; text-align:left;}
 
 /*MARKER*/
-div.marker {position:absolute; width:10px; height:10px; background:url('/images/marker.png') no-repeat 0 0}
+div.marker {position:absolute; width:10px; height:10px; background:url('/images/marker.png') no-repeat 0 0; z-index:10;}
+div.marker.hover {background-position:0 -10px; cursor:pointer;}
 div.marker p {position:absolute; top:-11px; left:-6px; font:bold 11px Arial; color:#F25A3D;}
+div.marker.hover p {color:black;}
