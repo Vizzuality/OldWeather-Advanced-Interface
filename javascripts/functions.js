@@ -1,4 +1,5 @@
 
+	// Convert date
 	function convertDate(date) {
 		var day_sufix ='';
 		if (date.day==1) {
@@ -28,4 +29,21 @@
 		}
 		
 		return date.day+day_sufix+' '+month+', '+date.year;
+	}
+
+
+	// Create a random id
+	function randomId() {
+	  var uuid= '';
+      for (i = 0; i < 32; i++) {
+       uuid += Math.floor(Math.random() * 16).toString(16);
+      }
+      return uuid;
+	}
+
+
+	// Stop propagation function
+	function stopPropagation(ev) {
+		ev.stopPropagation();
+		ev.preventDefault();
 	}

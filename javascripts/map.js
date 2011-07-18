@@ -7,8 +7,8 @@
 		// Get polyline path meanwhile adding markers...
 		var trace = [];
 		_.each(ship_data,function(ele,i){
-			if (ele.location.lat != undefined && ele.location.lat != null) {
-				var latlng = new L.LatLng(ele.location.lat,ele.location.lng);
+			if (ele.latitude != undefined && ele.longitude != null) {
+				var latlng = new L.LatLng(ele.latitude,ele.longitude);
 				trace.push(latlng);
 				var marker = new L.OldWeatherMarker(latlng, map, {iden:i});
 				markers[i] = marker;

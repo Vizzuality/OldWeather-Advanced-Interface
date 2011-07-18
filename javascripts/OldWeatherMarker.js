@@ -22,19 +22,22 @@ L.OldWeatherMarker = L.Class.extend({
   	  var me = this;
 
   		var div = this._div = document.createElement('div');
-			div.setAttribute('class','marker');
+			div.className = 'marker';
 			
-			var value = document.createElement('p');
-			value.innerHTML = this.options.iden;
+			var p_ = document.createElement('p');
+			p_.innerHTML = this.options.iden;
 
-			div.appendChild(value);
-  		map._panes.markerPane.appendChild(this._div);
+			div.appendChild(p_);
 
-      L.DomEvent.addListener(this._div, 'mouseover', this._onMouseOver, this);
-      L.DomEvent.addListener(this._div, 'mouseout', this._onMouseOut, this);
+
+      map._panes.markerPane.appendChild(this._div);
+
 
   		map.on('viewreset', this._reset, this);
   		this._reset();
+
+      // L.DomEvent.addListener(this._div, 'mouseover', this._onMouseOver, this);
+      // L.DomEvent.addListener(this._div, 'mouseout', this._onMouseOut, this);
   	},
   	
 

@@ -104,38 +104,32 @@ a.leaflet-active {
 	}
 
 .leaflet-control-zoom {
-	padding: 5px;
-	background: rgba(0, 0, 0, 0.25);
-	
-	-moz-border-radius: 7px;
-	-webkit-border-radius: 7px;
-	border-radius: 7px;
+	position:absolute;
+	top:0px;
+	left:282px;
+	width:26px;
+	height:58px;
+	z-index:10;
 	}
 .leaflet-control-zoom a {
 	display: block;
-	width: 19px;
-	height: 19px;
-	background-position: 50% 50%;
-	background-repeat: no-repeat;
-	background-color: rgba(255, 255, 255, 0.75);
-	
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	border-radius: 4px;
+	width: 26px;
+	height: 26px;
+	background-image:url('/images/zoom.png');
 	}
 .leaflet-control-zoom a:hover {
-	background-color: #fff;
+	background-position-y:-26px;
 	}
 .leaflet-big-buttons .leaflet-control-zoom a {
 	width: 27px;
 	height: 27px;
 	}
 .leaflet-control-zoom-in {
-	background-image: url(images/zoom-in.png);
-	margin-bottom: 5px;
+	background-position: -26px 0;
 	}
 .leaflet-control-zoom-out {
-	background-image: url(images/zoom-out.png);
+	margin-top:2px;
+	background-position: 0 0;
 	}
 	
 .leaflet-container .leaflet-control-attribution {

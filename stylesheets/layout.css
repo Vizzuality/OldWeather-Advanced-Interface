@@ -13,6 +13,12 @@ div.header p a {color:#CCCCCC; border-bottom:1px solid #CCCCCC; text-decoration:
 div.header p a:hover {color:#EEEEEE; border-color:#EEEEEE}
 div.header a.oldweather {float:right; width:147px; height:36px; margin:0 27px 0 0; text-indent:-9999px; background:url('/images/logo.png') no-repeat 0 0; line-height: 0px; font-size:0;}
 
+/*MAMUFAS*/
+div.mamufas {position:fixed; top:0; left:0; right:0; bottom:0; width:100%; height:100%; background:url('/images/loader_bkg.png') repeat 0 0; z-index:10;}
+div.mamufas span.loader {position:absolute; top:50%; left:50%; margin:-22px 0 0 -22px; height:44px; width:44px; background:url('/images/spinner_bkg.png') no-repeat 0 0;}
+div.mamufas span.loader img {margin:6px 0 0 6px;}
+div.mamufas p {position:absolute; top:50%; left:50%; width:100px; height:auto; margin:-100px 0 0 0 -100px!important; font:bold 14px "PT Sans","Helvetica",Arial; color:white; text-align:center;}
+
 /*STATS*/
 div.stats {float:left; display:block; width:100%; margin:48px 0 0;}
 div.stats div.controls {height:26px; padding:0 27px}
@@ -25,7 +31,7 @@ div.stats div.controls span.toggle a:hover {background-position-y:-25px}
 div.stats div.controls span.toggle a.selected {background-position-y:-25px}
 div.stats div.controls span.toggle a.selected:hover {background-position-y:0px}
 div.stats div#graph {width:100%; height:237px; margin:5px 0 0 0; overflow:hidden;}
-div.stats div#graph svg {}
+
 
 /*LIST*/
 div.list {position:absolute; top:399px; left:0; right:0; bottom:0; background:#f4f4f4; overflow:scroll}
@@ -41,11 +47,40 @@ table tbody tr.light {background:url('/images/li_bkg_1.png') repeat-x 0 0;}
 table tbody tr.dark {background:url('/images/li_bkg_2.png') repeat-x 0 0;}
 table tbody tr.hover {background:url('/images/li_bkg_hover.png') repeat-x 0 0;}
 table tbody tr:hover {background:url('/images/li_bkg_hover.png') repeat-x 0 0; cursor:pointer;}
-table tbody tr td {height:38px; background:url('/images/td_bkg.png') no-repeat right center;s}
+table tbody tr td {height:38px; background:url('/images/td_bkg.png') no-repeat right center;}
 table tbody tr td div {position:relative; height:15px; padding:12px 0 13px 10px; font:normal 13px Arial; color:#666666; text-align:left;}
 
+/*VALUES EDITOR*/
+div.editor {position:absolute; display:none; top:50px; bottom:50px; width:175px; height:auto;}
+div.editor div.top {display:block; width:175px; height:15px; background:url('/images/top_editor.png') no-repeat 0 0;}
+div.editor div.mid {display:block; width:143px; height:auto; padding:3px 16px 5px; background:url('/images/mid_editor.png') no-repeat 0 0;}
+div.editor div.mid div.first input {width:133px; height:13px; padding:6px 5px 7px; border:none; background:url('/images/input.png') no-repeat 0 0; font:bold 13px Arial; color:#666666;}
+div.editor div.mid div.first input.error {background-position:0 -26px;}
+div.editor div.mid div.second {display:none;}
+div.editor div.mid div.second label {display:block; font:normal 11px Arial; color:#464646;}
+div.editor div.mid div.second p {display:block; padding:0 0 5px; font:bold 13px Arial; color:#666666;}
+div.editor div.mid div.second p.new {padding:0; color:#999999;}
+div.editor div.bottom {display:block; width:143px; height:39px; padding:8px 16px 0; background:url('/images/bottom_editor.png') no-repeat 0 0;}
+div.editor div.bottom a.cancel {float:left; margin:2px 0 0 0; font:normal 13px Helvetica; color:#8b8b8b;}
+div.editor div.bottom a.cancel:hover {color:white;}
+div.editor div.bottom a.next {float:right; width:auto; height:21px; padding:0 0 0 1px; background:url('/images/editor_button_left.png') no-repeat 0 0;}
+div.editor div.bottom a.next span {float:right; width:auto; height:11px; padding:5px 8px 5px 7px; background:url('/images/editor_button_right.png') no-repeat right 0; font:bold 11px Arial; color:white; text-shadow: 0 1px #6E281B; line-height:11px;}
+div.editor div.bottom a.next:hover {background-position:0 -21px; cursor:pointer;}
+div.editor div.bottom a.next:hover span {background-position:right -21px;}
+
+
+
+
+
+
+
+/*LEAFLET MAP*/
+/*ok tick*/
+a.ok {position:absolute; right:240px; bottom:20px; width:60px; height:60px; background:url('/images/ok.png') no-repeat 0 0; z-index:10;}
+a.ok:hover {background-position:0 -60px;}
+
 /*MARKER*/
-div.marker {position:absolute; width:10px; height:10px; background:url('/images/marker.png') no-repeat 0 0; z-index:10;}
+div.marker {position:absolute; display:block; width:10px; height:10px; background:url('/images/marker.png') no-repeat 0 0; z-index:10;}
 div.marker.hover {background-position:0 -10px; cursor:pointer;}
 div.marker p {position:absolute; top:-11px; left:-6px; font:bold 11px Arial; color:#F25A3D;}
 div.marker.hover p {color:black;}

@@ -1,0 +1,13 @@
+TODO for me
+- Create events dispatcher
+- Finish the graph
+- Dispatch events with the graph
+- Create values editor
+- Create the loader for ajax requests
+- Normalize values from the cells (for example, remove ºC of the temparatures)
+
+
+TODO for oxford
+- Add name of the ship in the json
+- New example of json
+- Values over or down the current data...
