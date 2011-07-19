@@ -34,7 +34,7 @@ div.stats div#graph {width:100%; height:237px; margin:5px 0 0 0; overflow:hidden
 
 
 /*LIST*/
-div.list {position:absolute; top:399px; left:0; right:0; bottom:0; background:#f4f4f4; overflow:scroll}
+div.list {position:absolute; top:399px; left:0; right:0; bottom:0; background:#f4f4f4;}
 table {width:100%}
 table thead {position:relative; width:100%; height:36px; background:white;}
 table thead tr {position:relative; float:left; width:100%; height:36px; background:white; border-bottom:1px solid #e0e0e0;}

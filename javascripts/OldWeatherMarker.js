@@ -13,31 +13,26 @@ L.OldWeatherMarker = L.Class.extend({
   		this._div = null;
   		this._verticalOffset = 5;
   		this._horizontalOffset = 5;
-  		this._map = map;
-  		this.onAdd(this._map);
+  		this.onAdd(map);
   	},
 
 
   	onAdd: function(map) {
   	  var me = this;
-
+      this._map = map;
   		var div = this._div = document.createElement('div');
 			div.className = 'marker';
-			
 			var p_ = document.createElement('p');
 			p_.innerHTML = this.options.iden;
-
 			div.appendChild(p_);
 
-
       map._panes.markerPane.appendChild(this._div);
-
 
   		map.on('viewreset', this._reset, this);
   		this._reset();
 
-      // L.DomEvent.addListener(this._div, 'mouseover', this._onMouseOver, this);
-      // L.DomEvent.addListener(this._div, 'mouseout', this._onMouseOut, this);
+      L.DomEvent.addListener(this._div, 'mouseover', this._onMouseOver, this);
+      L.DomEvent.addListener(this._div, 'mouseout', this._onMouseOut, this);
   	},
   	
 
@@ -71,23 +66,16 @@ L.OldWeatherMarker = L.Class.extend({
   		L.DomEvent.stopPropagation(e);
       this.fire(e.type);
       this._simulateOver();
-      var event = jQuery.Event('mouseover_');
-      event.iden = this.options.iden;
-      event.from = 'map';
-      $(document).trigger(event);
+      dispatchEvent('map','mouseover',this.options.iden);
   	},
 
 
   	_onMouseOut: function(e) {
-  		L.DomEvent.stopPropagation(e);
-  		this.fire(e.type);
+  	  L.DomEvent.stopPropagation(e);
+      this.fire(e.type);
       this._simulateOut();
-      var event = jQuery.Event('mouseout_');
-      event.iden = this.options.iden;
-      event.from = 'map';
-      $(document).trigger(event);
+  		dispatchEvent('map','mouseout',this.options.iden);
   	},
-
 
     _simulateOver: function(){
       var div = this._div;

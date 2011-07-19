@@ -1,10 +1,10 @@
 	
 	var map;
-	var logbooks_ = [];
+	var logbook;
 
 	// INITIALIZE APP //
 	function initApp() {
-		map = new L.Map('map',{maxZoom:9});
+		map = new L.Map('map',{maxZoom:9,dragging:false, doubleClickZoom:false});
 		// Don't show the 'Powered by Leaflet' text
 		map.attributionControl.setPrefix('');
 		map.setView(new L.LatLng(43,-3), 4).addLayer(
@@ -12,19 +12,26 @@
         scheme: 'tms',
         attribution: "World bright - Mapbox"
 	    }));
+
+		// Bind button for next ship
+		$('a.ok').click(function(ev){
+		  stopPropagation(ev);
+		  nextShip();
+		});
 		
-		getShipData();
+		getShipData(31);
 	}
 	
 	
 	// GET SHIP DATA FROM THE SERVER //
-	function getShipData() {
+	function getShipData(number) {
 		$.ajax({
-			url: '/data/fake.txt?989',
+			url: '/data/fake.txt?order='+number,
 			dataType: 'text',
 			type: 'GET',
 			success:function(result){
 				var ship_data = $.parseJSON(result);
+				logbook = ship_data;
 				drawShipPolyline(ship_data.logbook);
 				//drawGraph(ship_data.logbook);
 				drawList(ship_data.logbook);
@@ -34,9 +41,6 @@
 	}
 	
 	
-
-
-
 	// Fill data from logbook and hide Mamufas
 	function completeRequest(ship_data) {
 		//Fill data of the logbook - Ship name, logbook url,...
@@ -45,6 +49,20 @@
 
 		//Close mamufas
 		$('div.mamufas').fadeOut();
+	}
+	
+	
+	// Restart app to show next ship
+	function nextShip() {
+	  $('div.mamufas').fadeIn();
+	  // Restart graph
+	  //restartGraph();
+	  // Restart map
+	  restartMap();
+	  // Restart list
+	  restartList();
+	  // Get next ship
+	  setTimeout(getShipData(logbook.order+1),500);
 	}
 
 

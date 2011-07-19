@@ -1,50 +1,64 @@
 {
-   "ship_name": "Death star ship",
-   "ship_type": "Battleship",
-   "order": 31,
-   "location": "http://oldweather.s3.amazonaws.com/ADM53-44888/ADM53-44888-016_1.jpg",
-   "logbook": [
-      {
-         "date":{
-            "day":24,
-            "month":8,
-            "year":1914
-         },
-         "port": "Grimsby",
-         "latitude":53.5859836545598,
-         "longitude":-0.067291259765625,
-         "data": [
-            {
-               "x":245,
-               "y":205,
-               "bulb":60,
-               "sea":10,
-               "air":63,
-               "wind_force":2,
-               "wind_direction":"SW"
+    "ship_name": "Death star ship",
+    "ship_type": "Battleship",
+    "order": 31,
+    "location": "http://oldweather.s3.amazonaws.com/ADM53-44888/ADM53-44888-016_1.jpg",
+    "logbook": [
+    {
+        "date": {
+            "day": 24,
+            "month": 8,
+            "year": 1914,
+            "status": "pending_confirmation",
+            "correction": {
+                "day": 25
             }
-         ]
-      },
-      {
-         "date":{
-            "day":25,
-            "month":8,
-            "year":1914
-         },
-         "port": "Grimsby",
-         "latitude":53.55988897245464,
-         "longitude":0.2197265625,
-         "data": [
-            {
-               "x":255,
-               "y":207,
-               "bulb":30,
-               "sea":10,
-               "air":23,
-               "wind_force":1,
-               "wind_direction":"SW"
-            }
-         ]
-      }
-   ]
+        },
+        "location": {
+            "port": "Grimsby",
+            "latitude": 53.5859836545598,
+            "longitude": -0.067291259765625,
+            "status": "machine_verified",
+            "correction": {}
+        },
+        "data": [
+        {
+            "x": 245,
+            "y": 205,
+            "bulb": 60,
+            "sea": 10,
+            "air": 63,
+            "wind_force": 2,
+            "wind_direction": "SW",
+            "time": 14
+        }
+        ]
+    },
+    {
+        "date": {
+            "day": 25,
+            "month": 8,
+            "year": 1914
+        },
+        "location": {
+            "port": "Grimsby",
+            "latitude": 53.55988897245464,
+            "longitude": 0.2197265625,
+            "status": "pending_correction",
+            "correction": {}
+        },
+        "data": [
+        {
+            "x": 255,
+            "y": 207,
+            "bulb": 30,
+            "sea": 10,
+            "air": 23,
+            "wind_force": 1,
+            "wind_direction": "SW",
+            "time": 14
+        }
+        ]
+    }
+    ]
 }

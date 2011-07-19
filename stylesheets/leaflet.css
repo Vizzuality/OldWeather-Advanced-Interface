@@ -118,7 +118,6 @@ a.leaflet-active {
 	background-image:url('/images/zoom.png');
 	}
 .leaflet-control-zoom a:hover {
-	background-position-y:-26px;
 	}
 .leaflet-big-buttons .leaflet-control-zoom a {
 	width: 27px;
@@ -131,6 +130,13 @@ a.leaflet-active {
 	margin-top:2px;
 	background-position: 0 0;
 	}
+  .leaflet-control-zoom-in:hover {
+  	background-position: -26px -26px;
+  	}
+  .leaflet-control-zoom-out:hover {
+  	background-position: 0 -26px;
+  	}	
+	
 	
 .leaflet-container .leaflet-control-attribution {
 	margin: 0;
