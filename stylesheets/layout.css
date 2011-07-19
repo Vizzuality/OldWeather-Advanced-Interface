@@ -1,7 +1,6 @@
-html {height:100%}
-body {width:100%; height:100%;}
-div#map {position:absolute; top:0; bottom:0; right:0; width:325px; height:100%; z-index:1;}
-div.data {position:absolute; top:0; bottom:0; left:0; right:325px; height:100%; background:url('../images/data_bkg.jpg') no-repeat center top #090909; z-index:10;}
+html {height:100%; background:white}
+body {width:100%; height:100%; background:white}
+div.data {position:absolute; top:0; bottom:0; left:0; right:50%; height:100%; background:url('../images/data_bkg.jpg') no-repeat center top #090909; z-index:10;}
 div.data span.shadow {position:absolute; top:0; right:-34px; bottom:0; height:100%; width:34px; background:url('../images/data_shadow.png') repeat-y 0 0}
 
 /*HEADER*/
@@ -34,7 +33,7 @@ div.stats div#graph {width:100%; height:237px; margin:5px 0 0 0; overflow:hidden
 
 
 /*LIST*/
-div.list {position:absolute; top:399px; left:0; right:0; bottom:0; background:#f4f4f4;}
+div.list {position:absolute; top:50%; left:0; right:0; bottom:0; background:#f4f4f4;}
 table {width:100%}
 table thead {position:relative; width:100%; height:36px; background:white;}
 table thead tr {position:relative; float:left; width:100%; height:36px; background:white; border-bottom:1px solid #e0e0e0;}
@@ -71,12 +70,15 @@ div.editor div.bottom a.next:hover span {background-position:right -21px;}
 
 
 
-
-
-
 /*LEAFLET MAP*/
-/*ok tick*/
-a.ok {position:absolute; right:240px; bottom:20px; width:60px; height:60px; background:url('/images/ok.png') no-repeat 0 0; z-index:10;}
+
+div#map {position:absolute; top:0; bottom:50%; right:0; left:50%; z-index:1;}
+a.zoom_in {position:absolute; right:10px; top:10px; width:26px; height:26px; background:url('/images/zoom.png') no-repeat -26px 0; z-index:10}
+a.zoom_in:hover {background-position:-26px -26px}
+a.zoom_out {position:absolute; right:10px; top:40px; width:26px; height:26px; background:url('/images/zoom.png') no-repeat 0 0; z-index:10}
+a.zoom_out:hover {background-position:0 -26px}
+  
+a.ok {position:absolute; left:53%; top:20px; width:60px; height:60px; background:url('/images/ok.png') no-repeat 0 0; z-index:10;}
 a.ok:hover {background-position:0 -60px;}
 
 /*MARKER*/
@@ -84,3 +86,10 @@ div.marker {position:absolute; display:block; width:10px; height:10px; backgroun
 div.marker.hover {background-position:0 -10px; cursor:pointer;}
 div.marker p {position:absolute; top:-11px; left:-6px; font:bold 11px Arial; color:#F25A3D;}
 div.marker.hover p {color:black;}
+
+
+/*LOGBOOK*/
+div.logbook {position:absolute; bottom:0; right:0; left:50%; top:50%; background:#F7F7F7}
+div.logbook div.legend {position:absolute; bottom:0; right:0; left:0; top:0; width:100%; height:100%; background:#F7F7F7; font:normal 13px Arial;}
+div.logbook div.legend h4,div.logbook div.legend h5 {margin:20px 0 0 20px}
+div.logbook div.legend ul,div.logbook div.legend ol {margin:10px 0 0 20px}

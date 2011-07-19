@@ -1,90 +1,79 @@
-L.OldWeatherMarker = L.Class.extend({
-    
-    includes: L.Mixin.Events,
-    
-    options: {
-			// Set id for each marker / row
-  	},
 
+  function OldWeatherMarker(latlng, info, map) {
+    this.latlng_ = latlng;
+  	this.inf = info;
+  	this.map_ = map;
 
-  	initialize: function(latlng, map, options) {
-  		L.Util.setOptions(this, options);
-  		this._latlng = latlng;
-  		this._div = null;
-  		this._verticalOffset = 5;
-  		this._horizontalOffset = 5;
-  		this.onAdd(map);
-  	},
+    this.offsetVertical_ = -5;
+    this.offsetHorizontal_ = -5;
+    this.height_ = 10;
+    this.width_ = 10;
 
+    this.setMap(map);
+  }
 
-  	onAdd: function(map) {
-  	  var me = this;
-      this._map = map;
-  		var div = this._div = document.createElement('div');
-			div.className = 'marker';
-			var p_ = document.createElement('p');
-			p_.innerHTML = this.options.iden;
-			div.appendChild(p_);
+  OldWeatherMarker.prototype = new google.maps.OverlayView();
 
-      map._panes.markerPane.appendChild(this._div);
+  OldWeatherMarker.prototype.draw = function() {
+    var me = this;
+  	var num = 0;
 
-  		map.on('viewreset', this._reset, this);
-  		this._reset();
+    var div = this.div_;
+    if (!div) {
+      div = this.div_ = document.createElement('div');
+      div.className = 'marker';
+      var p_ = document.createElement('p');
+      p_.innerHTML = this.inf.iden;
+      div.appendChild(p_);
 
-      L.DomEvent.addListener(this._div, 'mouseover', this._onMouseOver, this);
-      L.DomEvent.addListener(this._div, 'mouseout', this._onMouseOut, this);
-  	},
-  	
-
-  	onRemove: function(map) {
-  	  map._panes.markerPane.removeChild(this._div);
-  		map.off('viewreset', this._reset, this);
-  	},
-
-
-  	getLatLng: function() {
-  		return this._latlng;
-  	},
-
-
-  	setLatLng: function(latlng) {
-  		this._latlng = latlng;
-  		this._reset();
-  	},
-
-
-  	_reset: function() {
-  		var pos = this._map.latLngToLayerPoint(this._latlng).round();
-  		var div = this._div;
-  		
-  		div.style.left = pos.x-this._horizontalOffset + 'px';
-  		div.style.top = pos.y-this._verticalOffset + 'px';
-  	},
-  	
-
-  	_onMouseOver: function(e) {
-  		L.DomEvent.stopPropagation(e);
-      this.fire(e.type);
-      this._simulateOver();
-      dispatchEvent('map','mouseover',this.options.iden);
-  	},
-
-
-  	_onMouseOut: function(e) {
-  	  L.DomEvent.stopPropagation(e);
-      this.fire(e.type);
-      this._simulateOut();
-  		dispatchEvent('map','mouseout',this.options.iden);
-  	},
-
-    _simulateOver: function(){
-      var div = this._div;
-      $(div).addClass('hover');
-    },
-
-    _simulateOut: function(){
-      var div = this._div;
-      $(div).removeClass('hover');
+      var panes = this.getPanes();
+      panes.floatPane.appendChild(div);
+      
+      google.maps.event.addDomListener(div, 'mouseover', function() {
+        me.simulateOver();
+        dispatchEvent('map','mouseover',me.inf.iden);
+      });
+      
+      google.maps.event.addDomListener(div, 'mouseout', function() {
+        me.simulateOut();
+        dispatchEvent('map','mouseout',me.inf.iden);
+      });
     }
 
-  });
+  	var pixPosition = me.getProjection().fromLatLngToDivPixel(me.latlng_);
+    if (pixPosition) {
+  	  div.style.width = me.width_ + 'px';
+  	  div.style.left = (pixPosition.x + me.offsetHorizontal_) + 'px';
+  	  div.style.height = me.height_ + 'px';
+  	  div.style.top = (pixPosition.y + me.offsetVertical_) + 'px';
+    }
+
+  };
+
+  OldWeatherMarker.prototype.remove = function() {
+    if (this.div_) {
+      this.div_.parentNode.removeChild(this.div_);
+      this.div_ = null;
+    }
+  };
+
+  OldWeatherMarker.prototype.hide = function() {
+    if (this.div_) {
+      $(this.div_).find('div').fadeOut();
+    }
+  };
+
+  OldWeatherMarker.prototype.getPosition = function() {
+   return this.latlng_;
+  };
+  
+  
+  OldWeatherMarker.prototype.simulateOver = function(){
+    var div = this.div_;
+    $(div).addClass('hover');
+  },
+
+  OldWeatherMarker.prototype.simulateOut = function(){
+    var div = this.div_;
+    $(div).removeClass('hover');
+  }

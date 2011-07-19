@@ -7,14 +7,10 @@
 		_.each(ship_data,function(logbook,i){
 			// First each for loop all the logbooks of the json
 			_.each(logbook.data,function(row,j){
-			  console.log(logbook);
-				tbody+=	"<tr iden='"+i+"' class='"+((j % 2==0)?'light':'dark')+"'>"+
+				tbody+=	"<tr x='"+row.x+"' y='"+row.y+"' iden='"+i+"' class='"+((j % 2==0)?'light':'dark')+"'>"+
 									"<td><div style=\"width:65px\">"+i+"</div></td>"+
-									"<td><div style=\"width:140px\">"+convertDate(logbook.date) +"</div></td>"+
-									"<td><div style=\"width:130px\">"+logbook.location.latitude.toFixed(4) +' / '+ logbook.location.longitude.toFixed(4)+"</div></td>"+
-									"<td c='bulb' r='"+count+"' class='enabled'><div style=\"width:80px\">"+row.bulb+((row.bulb!='--')?'&ordm;C':'')+"</div></td>"+
-									"<td c='sea' r='"+count+"' class='enabled'><div style=\"width:80px\">"+row.sea+((row.sea!='--')?'&ordm;C':'')+"</div></td>"+
-									"<td c='air' r='"+count+"' class='enabled'><div style=\"width:80px\">"+row.air+((row.air!='--')?'&ordm;C':'')+"</div></td>"+
+									"<td class='enabled'><div style=\"width:150px\">"+convertDate(logbook.date) +"</div></td>"+
+									"<td class='enabled'><div style=\"width:150px\">"+logbook.location.latitude.toFixed(6) +' / '+ logbook.location.longitude.toFixed(6)+"</div></td>"+
 								"</tr>";
 				count++;
 			});
@@ -30,10 +26,10 @@
       // Trigger event for focus in the other elements of the app
       $('table tbody tr').hover(
        function(ev){
-         dispatchEvent('list','mouseover',$(this).attr('iden'));
+         dispatchEvent('list','mouseover',$(this).attr('iden'),$(this).attr('x'),$(this).attr('y'));
        },
        function(ev){
-         dispatchEvent('list','mouseout',$(this).attr('iden'));
+         dispatchEvent('list','mouseout',$(this).attr('iden'),0,0);
        }
       );
 

@@ -3,15 +3,25 @@
 	var logbook;
 
 	// INITIALIZE APP //
-	function initApp() {
-		map = new L.Map('map',{maxZoom:9,dragging:false, doubleClickZoom:false});
-		// Don't show the 'Powered by Leaflet' text
-		map.attributionControl.setPrefix('');
-		map.setView(new L.LatLng(43,-3), 4).addLayer(
-	    new L.TileLayer('http://a.tiles.mapbox.com/mapbox/1.0.0/world-bright/{z}/{x}/{y}.png', {
-        scheme: 'tms',
-        attribution: "World bright - Mapbox"
-	    }));
+	$(document).ready(function(){
+	  map = new google.maps.Map(
+      document.getElementById("map"), {
+      center: new google.maps.LatLng(0, 0),
+      zoom: 3,
+      disableDefaultUI: true,
+      mapTypeControlOptions: {
+        mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'mapbox']
+      }
+    });
+
+    // Add the mapbox layer type
+    map.mapTypes.set('mapbox', mbLayer({
+        tileset: 'world-bright',
+        name: 'World Bright'
+    }));
+
+    // Set the default map to world light
+    map.setMapTypeId('mapbox');
 
 		// Bind button for next ship
 		$('a.ok').click(function(ev){
@@ -19,8 +29,18 @@
 		  nextShip();
 		});
 		
+		// Zoom control
+		$('a.zoom_in').click(function(ev){
+		  stopPropagation(ev);
+		  map.setZoom(map.getZoom()+1);		  
+		});
+		$('a.zoom_out').click(function(ev){
+		  stopPropagation(ev);
+		  map.setZoom(map.getZoom()-1);
+		});
+
 		getShipData(31);
-	}
+	});
 	
 	
 	// GET SHIP DATA FROM THE SERVER //
@@ -34,6 +54,7 @@
 				logbook = ship_data;
 				drawShipPolyline(ship_data.logbook);
 				//drawGraph(ship_data.logbook);
+				showLogbook(ship_data.location);
 				drawList(ship_data.logbook);
 				completeRequest(ship_data);
 			}

@@ -1,6 +1,7 @@
 
 	var markers = {};
 	var polyline;
+	var bounds = new google.maps.LatLngBounds();
 
 	// DRAW POLYGON AND MARKERS IN THE MAP
 	function drawShipPolyline(ship_data) {
@@ -9,48 +10,45 @@
 		var trace = [];
 		_.each(ship_data,function(ele,i){
 			if (ele.location.latitude != undefined && ele.location.longitude != null) {
-				var latlng = new L.LatLng(ele.location.latitude,ele.location.longitude);
+				var latlng = new google.maps.LatLng(ele.location.latitude,ele.location.longitude);
 				trace.push(latlng);
-				var marker = new L.OldWeatherMarker(latlng, map, {iden:i});
+				bounds.extend(latlng);
+				var marker = new OldWeatherMarker(latlng, {iden:i}, map);
 				markers[i] = marker;
 			}
 		});
 		
 
-		// Draw polyline if there is more than 1 point
+    //Draw polyline if there is more than 1 point
     if (_.size(trace)>1) {
-      polyline = new L.Polyline(trace, {color: '#F15A3E'});
-      map.addLayer(polyline);
+      polyline = new google.maps.Polyline({path:trace, strokeColor: '#F15A3E', strokeWeight:3});
+      polyline.setMap(map);
     }
-		
-		if (_.size(trace)==1) {
-			map.setView(trace[0],5);
-		} else if (_.size(trace)>1) {
-			map.fitBounds(new L.LatLngBounds(trace));
-		}
-		
-		// Hack for Google Chrome + Leaflet
-		setTimeout(function(){
-		  $('div.leaflet-map-pane').css('-webkit-transform','');
-		},500);
+    
+    if (_.size(trace)==1) {
+      map.setCenter(trace[0]);
+      map.setZoom(5);
+    } else if (_.size(trace)>1) {
+      map.fitBounds(bounds);
+    }
 	}
 	
 	
 	// Simulate fire event over markers
 	function fireMapEvent(type,iden) {
 	  if (type=="mouseover") {
-	    markers[iden]._simulateOver();
+	    markers[iden].simulateOver();
 	  } else {
-	    markers[iden]._simulateOut();
+	    markers[iden].simulateOut();
 	  }
 	}
 	
 	
 	// Restart Map application
 	function restartMap() {
-	  map.removeLayer(polyline);
+	  polyline.setMap(null);
 	  _.each(markers,function(ele,i){
-	    ele.onRemove(map);
+	    ele.remove();
 	    delete markers[i];
 	  });
 	}

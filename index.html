@@ -5,42 +5,48 @@
     <link rel="shortcut icon" href="/images/favicon_32x32.ico" />
     <link rel="stylesheet" href="stylesheets/reset.css">
     <link rel="stylesheet" href="stylesheets/layout.css">
-    <link rel="stylesheet" href="stylesheets/leaflet.css">
     <link rel="stylesheet" href="stylesheets/jscrollpane.css">
-    <!--[if IE]>
-        <link rel="stylesheet" href="stylesheets/leaflet.ie.css">
-    <![endif]-->
-    <script src="javascripts/plugins/yepnope.js" type="text/javascript"></script>
-    <script type="text/javascript">
-      yepnope([{
-        load: ['https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js',
-               '/javascripts/plugins/jquery.mousewheel.js',
-               '/javascripts/plugins/jquery.jscrollpane.min.js',
-               '/javascripts/plugins/underscore.js',
-               '/javascripts/plugins/leaflet.js',
-               '/javascripts/plugins/raphael.js',
-               '/javascripts/plugins/jrumble.js',
-               '/javascripts/dispatcher.js',
-               '/javascripts/functions.js',
-               '/javascripts/map.js',
-               '/javascripts/OldWeatherMarker.js',
-               '/javascripts/list.js',
-               '/javascripts/graph.js',
-               '/javascripts/app.js'],
-        callback: function (url, result, key) {
-          if (!window.jQuery) {
-            yepnope('/javascripts/plugins/jquery.js');
-          }
-        },
-        complete: function() {
-          initApp();
-        }
-      }]);
-    </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" type="text/javascript"></script>
+    <script src="http://maps.googleapis.com/maps/api/js?sensor=true" type="text/javascript"></script>
+    <script src="/javascripts/plugins/jquery.mousewheel.js" type="text/javascript"></script>
+    <script src="/javascripts/plugins/jquery.jscrollpane.min.js" type="text/javascript"></script>
+    <script src="/javascripts/plugins/underscore.js" type="text/javascript"></script>
+    <script src="/javascripts/plugins/raphael.js" type="text/javascript"></script>
+    <script src="/javascripts/plugins/mapbox.js" type="text/javascript"></script>
+    <script src="/javascripts/plugins/jrumble.js" type="text/javascript"></script>
+    
+    <script src="/javascripts/dispatcher.js" type="text/javascript"></script>
+    <script src="/javascripts/OldWeatherMarker.js" type="text/javascript"></script>
+    <script src="/javascripts/functions.js" type="text/javascript"></script>
+    <script src="/javascripts/map.js" type="text/javascript"></script>
+    <script src="/javascripts/list.js" type="text/javascript"></script>
+    <script src="/javascripts/logbook.js" type="text/javascript"></script>
+    <script src="/javascripts/app.js" type="text/javascript"></script>
+
   </head>
   <body>
     <div id="map"></div>
     <a href="#next_ship" class="ok"></a>
+    <a class="zoom_in" href="#zoom_in"></a>
+    <a class="zoom_out" href="#zoom_out"></a>
+    <div class="logbook">
+      <div class="legend">
+        <h4>Confirm the data included in this logbook.</h4>
+        <ul>
+          <li>You can edit the date and the position of the ship.</li>
+          <li>Bla bla bla.</li>
+        </ul>
+        <h5>Legend</h5>
+        <ul>
+          <li>machine_verified</li>
+          <li>pending_correction</li>
+          <li>pending_confirmation</li>
+          <li>user_verified</li>
+          <li>user_unverified</li>
+        </ul>
+      </div>
+    </div>
     <div class="data">
       <span class="shadow"></span>
       <div class="header">
@@ -50,7 +56,7 @@
         </div>
         <a class="oldweather" href="http://oldweather.org">OldWeather.org</a>
       </div>
-      <div class="stats">
+      <!-- <div class="stats">
         <div class="controls">
           <span class="toggle">
             <a id="bulb" class="selected" href="#bulb">BULB</a>
@@ -59,17 +65,14 @@
           </span>
         </div>
         <div id="graph"></div>
-      </div>
+      </div> -->
       <div class="list">
         <table>
           <thead>
             <tr>
               <th><div style="width:65px">POS</div></th>
-              <th><div style="width:140px">DATE</div></th>
-              <th><div style="width:130px">LAT / LON</div></th>
-              <th><div style="width:80px" class="light">BULB</div></th>
-              <th><div style="width:80px" class="light">SEA</div></th>
-              <th><div style="width:80px" class="light">AIR</div></th>
+              <th><div style="width:150px">DATE</div></th>
+              <th><div style="width:150px">LAT / LON</div></th>
             </tr>
           </thead>
         </table>
