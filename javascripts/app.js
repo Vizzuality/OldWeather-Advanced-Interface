@@ -83,7 +83,7 @@
 	  // Restart list
 	  restartList();
 	  // Get next ship
-	  setTimeout(getShipData(logbook.order+1),500);
+	  setTimeout(function(){getShipData(logbook.order+1)},500);
 	}
 
 

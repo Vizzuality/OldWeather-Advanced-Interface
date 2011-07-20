@@ -1,5 +1,5 @@
 {
-    "ship_name": "Death star ship",
+    "ship_name": "Titanic ship",
     "ship_type": "Battleship",
     "order": 31,
     "location": "http://oldweather.s3.amazonaws.com/ADM53-44888/ADM53-44888-016_1.jpg",

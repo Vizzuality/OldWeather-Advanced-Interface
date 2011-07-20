@@ -9,8 +9,8 @@
 			_.each(logbook.data,function(row,j){
 				tbody+=	"<tr x='"+row.x+"' y='"+row.y+"' iden='"+i+"' class='"+((j % 2==0)?'light':'dark')+"'>"+
 									"<td><div style=\"width:65px\">"+i+"</div></td>"+
-									"<td class='enabled'><div style=\"width:150px\">"+convertDate(logbook.date) +"</div></td>"+
-									"<td class='enabled'><div style=\"width:150px\">"+logbook.location.latitude.toFixed(6) +' / '+ logbook.location.longitude.toFixed(6)+"</div></td>"+
+									"<td class='enabled' type=\"date\" r='"+count+"'><div style=\"width:170px\">"+convertDate(logbook.date) +"</div></td>"+
+									"<td class='enabled' type=\"location\" r='"+count+"'><div style=\"width:170px\">"+logbook.location.latitude.toFixed(8) +' / '+ logbook.location.longitude.toFixed(8)+"</div></td>"+
 								"</tr>";
 				count++;
 			});
@@ -38,8 +38,9 @@
       var editor = (function() {
         var old_value,    // Values of the cell
             new_value,
-            c,            // Position of the cell
-            r;            
+            r,
+            type,
+            iden;            
 
         // Create element
         $('div.list').append(
@@ -48,7 +49,48 @@
               '<div class="top"></div>'+
               '<div class="mid">'+
                 '<div class="first">'+
-                  '<input class="text" type="text" value=""/>'+
+                 '<div class="position">'+
+                   '<label>LATITUDE</label>'+
+                   '<input type="text" value=""/>'+
+                   '<label>LONGITUDE</label>'+
+                   '<input type="tetx" value=""/>'+
+                 '</div>'+
+                 '<div class="date">'+
+                   '<span class="select day">'+
+                     '<a href="#day" alt="23">23</a>'+
+                     '<ul>'+
+                       '<li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li>'+
+                       '<li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li>'+
+                       '<li>19</li>20<li>1</li><li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li><li>27</li>'+
+                       '<li>28</li><li>29</li><li>30</li><li>31</li>'+
+                     '</ul>'+
+                   '</span>'+
+                   '<span class="select month">'+
+                     '<a href="#month" alt="1">Enero</a>'+
+                     '<ul>'+
+                       '<li>January</li>'+
+                       '<li>February</li>'+
+                       '<li>March</li>'+
+                       '<li>April</li>'+
+                       '<li>May</li>'+
+                       '<li>June</li>'+
+                       '<li>July</li>'+
+                       '<li>August</li>'+
+                       '<li>September</li>'+
+                       '<li>October</li>'+
+                       '<li>November</li>'+
+                       '<li>December</li>'+
+                     '</ul>'+
+                   '</span>'+
+                   '<span class="select year">'+
+                     '<a href="#year" alt="1930">1930</a>'+
+                     '<ul>'+
+                       '<li>1930</li>'+
+                       '<li>1931</li>'+
+                       '<li>1932</li>'+
+                     '</ul>'+
+                   '</span>'+
+                 '</div>'+
                 '</div>'+
                 '<div class="second">'+
                   '<label>BEFORE</label>'+
@@ -80,20 +122,34 @@
         $('form').submit(function(ev){
           stopPropagation(ev);
           if ($('div.editor div.first').is(':visible')) {
-            new_value = $('div.editor form input').val();
-            if (new_value == old_value) {
-              hideEditor();
-              return false; 
+
+            if (type!="date") {
+              new_value = $('div.editor form input:eq(0)').val() + ' / ' + $('div.editor form input:eq(1)').val();
+              if (new_value == old_value) {
+                hideEditor();
+                return false; 
+              }
+
+              if (checkPosition()) {
+                secondStep();
+              }
+            } else {
+              
             }
 
-            if (checkNumber(new_value)) {
-              secondStep();
-            }
+
           } else {
-            // TODO create a new request
+            // TODOOOOO create a new request
 
-            // Normalize values to add for example ºC
-            $('table tbody td[r="'+r+'"][c="'+c+'"]').find('div').html(new_value+'&ordm;C');
+            // Change value of the cell
+            if (type!="date") {
+              $('table tbody td[r="'+r+'"][type="'+type+'"]').find('div').html(new_value);
+              var new_latlng = new google.maps.LatLng(new_value.split(' / ')[0],new_value.split(' / ')[1]);
+              markers[iden].setPosition(new_latlng);
+              redrawPolygon();
+            } else {
+              // TODOOOOOOO
+            }
             // Hide editor
             hideEditor(); 
           }
@@ -102,8 +158,8 @@
 
         function secondStep() {
           // Fill data
-          $('div.editor div.second p:eq(0)').html(old_value+'&ordm;C');
-          $('div.editor div.second p:eq(1)').html(new_value+'&ordm;C');
+          $('div.editor div.second p:eq(0)').html(old_value);
+          $('div.editor div.second p:eq(1)').html(new_value);
 
           // Show next step
           $('div.editor div.second').show();
@@ -113,23 +169,45 @@
         }
 
 
-        function checkNumber(number){
+        function checkPosition(){
           var pattern = /^([+-]?(((\d+(\.)?)|(\d*\.\d+))([eE][+-]?\d+)?))$/;
-             if (pattern.test(number)) {
-               $('div.editor input').removeClass('error');
-               return true;
-             } else {
-               $('div.editor input').addClass('error');
+          var errors = 0;
 
-               $('div.editor').jrumble({rumbleEvent: 'click'});
-               $('div.editor').trigger('click');    
-               setTimeout(function(){
-                   $('div.editor').trigger('click');
-                   $('div.editor').unbind('click')
-               }, 300);
+          // Check latitude
+          var latitude = $('div.editor input:eq(0)').val();
+          if (pattern.test(latitude) && latitude<180 && latitude>-180) {
+            $('div.editor input:eq(0)').removeClass('error');
+          } else {
+            errors++;
+            $('div.editor input:eq(0)').addClass('error');
+          }
 
-               return false;
-             }
+          // Check longitude
+          var longitude = $('div.editor input:eq(1)').val();
+          if (pattern.test(longitude) && longitude<180 && longitude>-180) {
+            $('div.editor input:eq(1)').removeClass('error');
+          } else {
+            errors++;
+            $('div.editor input:eq(1)').addClass('error');
+          }
+
+          // Errors??
+          if (errors>0) {
+            $('div.editor').jrumble({rumbleEvent: 'click'});
+            $('div.editor').trigger('click');
+            setTimeout(function(){
+              $('div.editor').trigger('click');
+              $('div.editor').unbind('click')
+            }, 300);
+            return false;
+          } else {
+            $('div.editor input').each(
+              function(i,ele){
+                $(ele).removeClass('error');
+              }
+            );
+            return true;
+          }
         }
 
 
@@ -145,39 +223,45 @@
           $('div.editor input').removeClass('error');
 
           var position = cell.offset();
+          var position_list = $('div.list').position().top;
           var app_height = $(document).height();
-
           // Calculate where to positionate the editor window
-          position.top = position.top-430;
-          position.left = position.left-44;
+          position.top = position.top-position_list - 10;
+          position.left = position.left-10;
 
           $('div.editor').css({
             top:position.top+'px',
             left:position.left+'px'
           });
 
-          // Get cell position
-          c = cell.attr('c');
+          // Get type (date or position)
+          type = cell.attr('type');
           r = cell.attr('r');
+          iden = cell.closest('tr').attr('iden');
           // Get old value
           old_value = cell.find('div').text();
 
-          //TODO NORMALIZE VALUES!!
-          old_value = old_value.substr(0,old_value.length-2);
-          $('div.editor input').val(old_value);
 
-          // Store previous value
-          $('div.editor').attr('alt',cell.find('div').text());
-
+          // Show the proper type of edition (date or position) 
+          $('div.editor div.first div.date,div.editor div.first div.position').hide();
+          if (type=="date") {
+            $('div.editor div.first div.date').show();
+          } else {
+            $('div.editor div.first div.position').show();
+            var values = old_value.split(' / ');
+            $('div.editor div.first div.position input:eq(0)').val(values[0]);
+            $('div.editor div.first div.position input:eq(1)').val(values[1]);
+          }
+          
           $('div.editor').show();
-          $('div.editor input').select().focusin();
+          $('div.editor input:eq(0)').select().focusin();
 
 
           $(document).keydown(function(event){
             if (event.which == '27') {
               hideEditor();
             }
-            });
+          });
         }
 
         return {
@@ -185,6 +269,9 @@
           show: showEditor
         }
       }());
+
+
+
 
       // Document listener to show editor properly
       $(document).dblclick(function(event){

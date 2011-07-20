@@ -52,3 +52,17 @@
 	    delete markers[i];
 	  });
 	}
+
+
+	// Redraw polygon
+	function redrawPolygon() {
+		var trace = [],
+				bounds = new google.maps.LatLngBounds();
+			
+		_.each(markers,function(ele,i){
+			trace.push(ele.getPosition());
+			bounds.extend(ele.getPosition());
+		});
+		polyline.setPath(trace);
+		map.fitBounds(bounds);
+	}
