@@ -9,8 +9,8 @@
 			_.each(logbook.data,function(row,j){
 				tbody+=	"<tr x='"+row.x+"' y='"+row.y+"' iden='"+i+"' class='"+((j % 2==0)?'light':'dark')+"'>"+
 									"<td><div style=\"width:65px\">"+i+"</div></td>"+
-									"<td class='enabled' type=\"date\" r='"+count+"'><div style=\"width:170px\">"+convertDate(logbook.date) +"</div></td>"+
-									"<td class='enabled' type=\"location\" r='"+count+"'><div style=\"width:170px\">"+logbook.location.latitude.toFixed(8) +' / '+ logbook.location.longitude.toFixed(8)+"</div></td>"+
+									"<td class='enabled' type=\"date\" r='"+count+"'><div class='"+logbook.date.status+"' style=\"width:170px\">"+convertDate(logbook.date) +"</div></td>"+
+									"<td class='enabled' type=\"location\" r='"+count+"'><div class='"+logbook.location.status+"' style=\"width:170px\">"+logbook.location.latitude.toFixed(8) +' / '+ logbook.location.longitude.toFixed(8)+"</div></td>"+
 								"</tr>";
 				count++;
 			});

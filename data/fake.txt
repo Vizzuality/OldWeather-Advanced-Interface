@@ -12,14 +12,18 @@
             "status": "pending_confirmation",
             "correction": {
                 "day": 25
-            }
+            },
+            "x":600,
+            "y":500
         },
         "location": {
             "port": "Grimsby",
             "latitude": 53.5859836545598,
             "longitude": -0.067291259765625,
             "status": "machine_verified",
-            "correction": {}
+            "correction": {},
+            "x":100,
+            "y":500
         },
         "data": [
         {
@@ -38,14 +42,22 @@
         "date": {
             "day": 25,
             "month": 8,
-            "year": 1914
+            "year": 1914,
+            "status": "pending_confirmation",
+            "correction": {
+                "day": 25
+            },
+            "x":200,
+            "y":900
         },
         "location": {
             "port": "Grimsby",
             "latitude": 53.55988897245464,
             "longitude": 0.2197265625,
             "status": "pending_correction",
-            "correction": {}
+            "correction": {},
+            "x":10,
+            "y":200
         },
         "data": [
         {
