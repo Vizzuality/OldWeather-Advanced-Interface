@@ -57,7 +57,8 @@
                  '</div>'+
                  '<div class="date">'+
                    '<span class="select day">'+
-                     '<a href="#day" alt="23">23</a>'+
+                     '<label>DAY</label>'+
+                     '<a href="#day" alt="23"><span>23</span></a>'+
                      '<ul>'+
                        '<li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li>'+
                        '<li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li>'+
@@ -66,7 +67,8 @@
                      '</ul>'+
                    '</span>'+
                    '<span class="select month">'+
-                     '<a href="#month" alt="1">Enero</a>'+
+                     '<label>MONTH</label>'+
+                     '<a href="#month"><span>January</span></a>'+
                      '<ul>'+
                        '<li>January</li>'+
                        '<li>February</li>'+
@@ -83,7 +85,8 @@
                      '</ul>'+
                    '</span>'+
                    '<span class="select year">'+
-                     '<a href="#year" alt="1930">1930</a>'+
+                     '<label>YEAR</label>'+
+                     '<a href="#year" alt="1930"><span>1930</span></a>'+
                      '<ul>'+
                        '<li>1930</li>'+
                        '<li>1931</li>'+
@@ -118,6 +121,30 @@
           hideEditor();
         });
 
+        // Date selector
+        $('span.select a').click(function(ev){
+          stopPropagation(ev);
+          if (!$(this).parent().find('ul').is(':visible')) {
+            $('span.select ul').each(function(i,ele){$(ele).hide()});
+            $(this).parent().find('ul').show();
+
+            $('body').click(function(event){
+              if (!$(event.target).closest('span.select ul').length) {
+                $('span.select ul').each(function(i,ele){$(ele).hide()});
+                $('body').unbind('click');
+              }
+            });
+          }
+        });
+
+        $('span.select ul li').click(function(ev){
+          var value = $(this).text();
+          $(this).closest('span.select').find('a').children('span').text(value);
+          $('body').unbind('click');
+          $('span.select ul').each(function(i,ele){$(ele).hide()});
+        });
+
+
         // Form to accept ENTER bind
         $('form').submit(function(ev){
           stopPropagation(ev);
@@ -134,12 +161,16 @@
                 secondStep();
               }
             } else {
-              
+              new_value = {day:$('span.select.day a span').text(),month:getMonth($('span.select.month a span').text()),year:$('span.select.year a span').text()};
+              if (new_value.day == old_value.day && new_value.year == old_value.year && new_value.month == old_value.month) {
+                hideEditor();
+              } else {
+                secondStep();
+              }
             }
 
-
           } else {
-            // TODOOOOO create a new request
+            // TODOOOOO REQUEST TO SERVER
 
             // Change value of the cell
             if (type!="date") {
@@ -148,7 +179,7 @@
               markers[iden].setPosition(new_latlng);
               redrawPolygon();
             } else {
-              // TODOOOOOOO
+              $('table tbody td[r="'+r+'"][type="'+type+'"]').find('div').html(convertDate(new_value));
             }
             // Hide editor
             hideEditor(); 
@@ -157,13 +188,17 @@
 
 
         function secondStep() {
-          // Fill data
-          $('div.editor div.second p:eq(0)').html(old_value);
-          $('div.editor div.second p:eq(1)').html(new_value);
+          if (type!="date") {
+            // Fill data
+            $('div.editor div.second p:eq(0)').html(old_value);
+            $('div.editor div.second p:eq(1)').html(new_value);
+          } else {
+            $('div.editor div.second p:eq(0)').html(convertDate(old_value));
+            $('div.editor div.second p:eq(1)').html(convertDate(new_value));
+          }
 
           // Show next step
           $('div.editor div.second').show();
-
           // Hide previous step
           $('div.editor div.first').hide();
         }
@@ -227,7 +262,7 @@
           var app_height = $(document).height();
           // Calculate where to positionate the editor window
           position.top = position.top-position_list - 10;
-          position.left = position.left-10;
+          position.left = position.left+2;
 
           $('div.editor').css({
             top:position.top+'px',
@@ -245,6 +280,12 @@
           // Show the proper type of edition (date or position) 
           $('div.editor div.first div.date,div.editor div.first div.position').hide();
           if (type=="date") {
+            old_value = getDate(old_value);
+
+            $('span.select:eq(0) a span').text(old_value.day);
+            $('span.select:eq(1) a span').text(convertMonth(old_value.month));
+            $('span.select:eq(2) a span').text(old_value.year);
+
             $('div.editor div.first div.date').show();
           } else {
             $('div.editor div.first div.position').show();

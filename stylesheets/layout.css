@@ -59,6 +59,32 @@ div.editor div.mid div.second {display:none;}
 div.editor div.mid div label {display:block; font:normal 11px Arial; color:#464646;}
 div.editor div.mid div.second p {display:block; padding:0 0 5px; font:bold 13px Arial; color:#666666;}
 div.editor div.mid div.second p.new {padding:0; color:#999999;}
+
+
+
+
+
+/*date - selects*/
+div.editor div.mid div.date {padding:0 0 5px;}
+div.editor div.mid div.date span.select {position:relative; display:inline-block; width:100%;}
+div.editor div.mid div.date span.select label {padding:5px 0 3px 0;}
+div.editor div.mid div.date span.select a {float:left; width:auto; height:22px; padding:0 0 0 2px; background:url('/images/left-select.png') no-repeat 0 0; text-decoration:none;}
+div.editor div.mid div.date span.select a span {float:left; width:auto; height:12px; padding:5px 20px 5px 5px; background:url('/images/right-select.png') no-repeat right 0; font:normal 12px Arial; color:#666666;}
+div.editor div.mid div.date span.select.day a span {width:15px;}
+div.editor div.mid div.date span.select.month a span {width:80px;}
+div.editor div.mid div.date span.select.year a span {width:30px;}
+
+div.editor div.mid div.date span.select a:hover span {color:#333333;}
+div.editor div.mid div.date span.select ul {position:absolute; display:none; top:40px; width:auto; max-height:100px; padding:5px 10px; border:1px solid #CCCCCC; z-index:10; background:#EEEEEE; overflow:auto; overflow-x:hidden;}
+div.editor div.mid div.date span.select.day ul {width:20px;}
+div.editor div.mid div.date span.select.month ul {width:85px;}
+div.editor div.mid div.date span.select.year ul {width:35px;}
+
+div.editor div.mid div.date span.select ul li {width:100%; font:normal 12px "Helvetica"; color:#666666;}
+div.editor div.mid div.date span.select ul li:hover {color:#333333; cursor:pointer;}
+
+
+
 div.editor div.bottom {display:block; width:143px; height:39px; padding:8px 16px 0; background:url('/images/bottom_editor.png') no-repeat 0 0;}
 div.editor div.bottom a.cancel {float:left; margin:2px 0 0 0; font:normal 13px Helvetica; color:#8b8b8b;}
 div.editor div.bottom a.cancel:hover {color:white;}
@@ -90,6 +116,13 @@ div.marker.hover p {color:black;}
 
 /*LOGBOOK*/
 div.logbook {position:absolute; bottom:0; right:0; left:50%; top:50%; background:#F7F7F7}
-div.logbook div.legend {position:absolute; bottom:0; right:0; left:0; top:0; width:100%; height:100%; background:#F7F7F7; font:normal 13px Arial;}
+div.logbook div.legend {position:absolute; bottom:0; right:0; left:0; top:0; width:100%; height:100%; background:#DDDDDD; font:normal 13px Arial;}
 div.logbook div.legend h4,div.logbook div.legend h5 {margin:20px 0 0 20px}
 div.logbook div.legend ul,div.logbook div.legend ol {margin:10px 0 0 20px}
+
+
+.machine_verified {color:green;}
+.pending_correction {color:orange;}
+.pending_confirmation {color:orange;}
+.user_verified {color:green;}
+.user_unverified {color:#FFFF33;}
