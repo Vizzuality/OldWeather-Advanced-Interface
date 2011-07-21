@@ -9,8 +9,8 @@
 			_.each(logbook.data,function(row,j){
 				tbody+=	"<tr x='"+row.x+"' y='"+row.y+"' iden='"+i+"' class='"+((j % 2==0)?'light':'dark')+"'>"+
 									"<td><div style=\"width:65px\">"+i+"</div></td>"+
-									"<td class='enabled' type=\"date\" r='"+count+"'><div class='"+logbook.date.status+"' style=\"width:170px\">"+convertDate(logbook.date) +"</div></td>"+
-									"<td class='enabled' type=\"location\" r='"+count+"'><div class='"+logbook.location.status+"' style=\"width:170px\">"+logbook.location.latitude.toFixed(8) +' / '+ logbook.location.longitude.toFixed(8)+"</div></td>"+
+									"<td x='"+logbook.date.x+"' y='"+logbook.date.y+"' class='enabled' type=\"date\" r='"+count+"'><div class='"+logbook.date.status+"' style=\"width:170px\">"+convertDate(logbook.date) +"</div></td>"+
+									"<td x='"+logbook.location.x+"' y='"+logbook.location.y+"' class='enabled' type=\"location\" r='"+count+"'><div class='"+logbook.location.status+"' style=\"width:170px\">"+logbook.location.latitude.toFixed(8) +' / '+ logbook.location.longitude.toFixed(8)+"</div></td>"+
 								"</tr>";
 				count++;
 			});
@@ -26,10 +26,20 @@
       // Trigger event for focus in the other elements of the app
       $('table tbody tr').hover(
        function(ev){
-         dispatchEvent('list','mouseover',$(this).attr('iden'),$(this).attr('x'),$(this).attr('y'));
+         dispatchEvent('list','mouseover',$(this).attr('iden'),0,0);
        },
        function(ev){
          dispatchEvent('list','mouseout',$(this).attr('iden'),0,0);
+       }
+      );
+
+
+      $('table tbody tr td').hover(
+       function(ev){
+         dispatchEvent('list','mouseover',$(this).closest('tr').attr('iden'),$(this).attr('x'),$(this).attr('y'));
+       },
+       function(ev){
+         dispatchEvent('list','mouseout',$(this).closest('tr').attr('iden'),0,0);
        }
       );
 
